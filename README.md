@@ -28,7 +28,7 @@ O site utilizado para a coleta das cotações foi o  <a href="https://www.melhor
 
 ### Metodologia:
 
-No início, empregamos a biblioteca **Pandas** para efetuar a importação e a leitura do conjunto de dados. 
+No início, foi empregado a biblioteca **Pandas** para efetuar a importação e a leitura do conjunto de dados. 
 ###
 <img src="/img/dataset.png">
 
