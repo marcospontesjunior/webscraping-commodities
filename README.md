@@ -9,7 +9,7 @@ Elaboração de um script (algoritmo) visando à automatização do processo de 
 
 ### Proposta:
 
-Desenvolver um script que automatize a coleta de cotações de commodities, analise se o valor está abaixo do preço ideal definido no conjunto de dados para compra e, se for o caso, atualize com as indicações de compra. O resultado final será exportado em um novo arquivo .**xlsx**.
+Desenvolver um script que automatize a coleta de cotações de commodities, analisar se o valor está abaixo do preço ideal definido no conjunto de dados para compra e, se for o caso, atualize com as indicações de compra. O resultado final será exportado em um novo arquivo .**xlsx**.
 
 O site utilizado para a coleta das cotações foi o  <a href="https://www.melhorcambio.com/">**Melhor Câmbio**</a>
 
