@@ -17,6 +17,7 @@ O site utilizado para a coleta das cotações foi o  <a href="https://www.melhor
 - <strong>data:</strong> Encontrará o arquivo **.xlsx** do dataset base para pesquisa e o dataset gerado ao fim do script.
 - <strong>img:</strong> Aqui você encontrará os prints obtidos durante o processo.
 - <strong>script:</strong> Este diretório contém o script desenvolvido.
+- <strong>readme_translated:</strong> This repository contains the **PDF** with the **report** translated into English.
 
 ### Linguagem Utilizada:
 ###
