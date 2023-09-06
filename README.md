@@ -66,7 +66,7 @@ O resultado final foi exportado em um novo arquivo **xlsx**.
 <img src="/img/dataset_atualizado.png">
 
 ###
-**Obs:** Os valores obtidos são referentes ao dia da publicação deste repositório.
+**Obs:** Os valores obtidos são referentes ao dia da publicação deste repositório. 
 
 ### Conclusão:
 
