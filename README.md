@@ -39,8 +39,23 @@ Foi possível identificar as commodities para as quais os valores atuais seriam 
 Em seguida, foi feito o tratamento dos nomes dos produtos, onde alguns apresentavam a primeira letra em maiúscula e ou contendo acentuação. Para realizar essa tarefa, foi utilizada a biblioteca **Unidecode**. 
 
 Inicialmente, uma função foi criada para eliminar caracteres do texto. Um loop **for** foi utilizado para percorrer as linhas, exigindo uma estrutura condicional.
+
 ###
-<img src="/img/cdg_tratamento_nomes.png">
+```
+def remover_acento(text):
+    return unidecode(text)
+
+lista_produtos = []
+
+for linha in df.index:
+    produto = df.loc[linha, "Produto"]
+
+    if any(c in produto for c in 'áéíóúâêîôûãõÁÉÍÓÚÂÊÎÔÛÃÕ'):
+        produto_sem_acento = remover_acento(produto)
+        lista_produtos.append(produto_sem_acento.lower())
+    else:
+        lista_produtos.append(produto.lower())
+```
 
 ###
 O trecho de código **if any(c in produto for c in 'áéíóúâêîôûãõÁÉÍÓÚÂÊÎÔÛÃÕ')** verifica se algum dos caracteres acentuados da lista está presente na variável **"produto"**. Se pelo menos um desses caracteres estiver presente, a expressão **any(...)** será avaliada como **verdadeira**; caso contrário, será avaliada como **falsa**.
@@ -48,8 +63,23 @@ O trecho de código **if any(c in produto for c in 'áéíóúâêîôûãõÁÉ
 Por fim, a função **.append** foi utilizada para criar uma nova lista contendo as modificações necessárias.
 
 A coleta automatizada teve sua implementação através da utilização do framework **Webdriver** do **Selenium**.
+
 ###
-<img src="/img/cdg_webscraping.png">
+```
+navegador = webdriver.Chrome()
+
+for linha, produto in enumerate(lista_produtos):
+
+    link = f"https://www.melhorcambio.com/{produto}-hoje"
+    
+    navegador.get(link)
+    preco_produto = navegador.find_element("xpath", '//*[@id="comercial"]').get_attribute("value")
+    preco_produto = preco_produto.replace(".", "").replace(",", ".")
+    
+    df.loc[linha, "Preço Atual"] = preco_produto
+    
+navegador.quit()
+```
 
 ###
 O **xpath** foi utilizado como ponto de referência para extrair o atributo **"value"**, sendo necessário, em seguida, efetuar a substituição de vírgulas por pontos, a fim de se adequar ao padrão do **Python**.
@@ -57,8 +87,21 @@ O **xpath** foi utilizado como ponto de referência para extrair o atributo **"v
 O uso da função **enumerate** permitiu a obtenção do índice e do valor do produto, possibilitando, assim, a atualização do DataFrame durante a iteração do loop.
 
 Processamento da coluna **"Preço Atual"** e à subsequente o preenchimento da coluna **"Comprar"** com as informações essenciais. Este último passo envolveu a aplicação das devidas operações para garantir a precisão da inserção das indicações apropriadas na coluna **"Comprar"**.
+
 ###
-<img src="/img/cdg_preenchimento_comprar.png">
+```
+df["Preço Atual"] = pd.to_numeric(df["Preço Atual"], errors="coerce")
+
+for index, row in df.iterrows():
+    if row["Preço Atual"] < row["Preço Ideal"] and row["Preço Atual"] != 0:
+        df.at[index, "Comprar"] = "Comprar"
+    elif row["Preço Atual"] > row["Preço Ideal"]:
+        df.at[index, "Comprar"] = "Não Comprar"
+    elif row["Preço Atual"] == 0:
+        df.at[index, "Comprar"] = "Valor Não Encontrado"
+    else:
+        df.at[index, "Comprar"] = "ERROR"
+```
 
 ###
 O resultado final foi exportado em um novo arquivo **xlsx**.
